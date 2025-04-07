@@ -1,0 +1,56 @@
+Digital Learning Platform - Entity Analysis
+Based on the codebase analysis, this Digital Learning Platform addresses the challenges mentioned in the problem statement through several key entities and functionalities.
+
+Core Entities and Attributes
+1. User
+Attributes: id, username, email, password, firstName, lastName, role
+Relationships: Has progress records, assignments, notifications
+Purpose: Provides personalized identity and tracks individual progress
+2. Course
+Attributes: id, title, description, duration, level, category, imageUrl, createdAt, updatedAt
+Relationships: Contains resources, assignments, and tracks student enrollments
+Purpose: Organizes learning content in structured format
+3. Assignment
+Attributes: id, title, description, dueDate, completed
+Relationships: Belongs to course, assigned to user
+Purpose: Helps students track deadlines and tasks
+4. Resource
+Attributes: id, title, description, url, type (video/document/link)
+Relationships: Associated with specific courses
+Purpose: Provides diverse learning materials in an organized manner
+5. Progress
+Attributes: id, completedLessons, lastAccessed
+Relationships: Links user to course
+Purpose: Tracks individual achievement and engagement
+6. Notification
+Attributes: id, message, type, read, createdAt
+Relationships: Belongs to user
+Purpose: Maintains engagement and provides timely reminders
+How These Address the Problem Statement:
+Organization Challenges:
+
+Structured courses with clear resources and assignments
+Deadline tracking for assignments
+Categorized learning resources
+Motivation and Engagement:
+
+Progress tracking shows completion percentage
+Notifications provide reminders and updates
+Visual tracking of completed vs. pending assignments
+
+Self-Directed Learning Support:
+
+Resource variety accommodates different learning styles
+Progress tracking helps set personal goals
+Organized course structure guides the learning journey
+Personalization:
+
+Individual progress tracking
+Personalized assignment status
+Custom notification system
+Isolation Mitigation:
+
+User system indicates social aspects of learning
+Structured framework provides guidance typically found in traditional classrooms
+The architecture combines Spring Boot backend with React frontend, providing both organization tools and engagement features that traditional LMS platforms
+often lack.
