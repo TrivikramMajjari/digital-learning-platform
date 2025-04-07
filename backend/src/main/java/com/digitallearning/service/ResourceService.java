@@ -1,10 +1,14 @@
 package com.digitallearning.service;
 
+import com.digitallearning.exception.ResourceNotFoundException;
+import com.digitallearning.model.Course;
 import com.digitallearning.model.Resource;
+import com.digitallearning.repository.CourseRepository;
 import com.digitallearning.repository.ResourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,24 +18,37 @@ public class ResourceService {
     @Autowired
     private ResourceRepository resourceRepository;
 
+    @Autowired
+    private CourseRepository courseRepository;
+
     public List<Resource> getAllResources() {
         return resourceRepository.findAll();
     }
 
-    public Optional<Resource> getResourceById(Long id) {
-        return resourceRepository.findById(id);
+    public Resource getResourceById(Long id) {
+        return resourceRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource", "id", id));
     }
 
-    public Resource createResource(Resource resource) {
+    public List<Resource> getResourcesByCourseId(Long courseId) {
+        return resourceRepository.findByCourseId(courseId);
+    }
+
+    public Resource createResource(Resource resource, Long courseId) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new ResourceNotFoundException("Course", "id", courseId));
+        resource.setCourse(course);
+        resource.setCreatedAt(LocalDateTime.now());
         return resourceRepository.save(resource);
     }
 
     public Resource updateResource(Long id, Resource resourceDetails) {
         Resource resource = resourceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Resource not found with id " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Resource", "id", id));
         
         resource.setTitle(resourceDetails.getTitle());
-        resource.setDescription(resourceDetails.getDescription());
+        resource.setType(resourceDetails.getType());
+        resource.setContent(resourceDetails.getContent());
         resource.setUrl(resourceDetails.getUrl());
         
         return resourceRepository.save(resource);
@@ -39,7 +56,7 @@ public class ResourceService {
 
     public void deleteResource(Long id) {
         Resource resource = resourceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Resource not found with id " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Resource", "id", id));
         resourceRepository.delete(resource);
     }
 }

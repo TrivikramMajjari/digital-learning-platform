@@ -1,75 +1,44 @@
 package com.digitallearning.model;
 
-import javax.persistence.*;
-import java.util.Date;
+import jakarta.persistence.*; // Changed import
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "progress")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Progress {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Integer completedLessons;
+
+    private Integer totalLessons;
+
+    private Double score;
+
+    private LocalDateTime lastAccessed;
+
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "course_id", nullable = false)
+    @JoinColumn(name = "course_id")
     private Course course;
 
-    private int completedLessons;
-
-    private Date lastAccessed;
-
-    public Progress() {
+    @PrePersist
+    protected void onCreate() {
+        this.lastAccessed = LocalDateTime.now();
     }
 
-    public Progress(User user, Course course, int completedLessons, Date lastAccessed) {
-        this.user = user;
-        this.course = course;
-        this.completedLessons = completedLessons;
-        this.lastAccessed = lastAccessed;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    public int getCompletedLessons() {
-        return completedLessons;
-    }
-
-    public void setCompletedLessons(int completedLessons) {
-        this.completedLessons = completedLessons;
-    }
-
-    public Date getLastAccessed() {
-        return lastAccessed;
-    }
-
-    public void setLastAccessed(Date lastAccessed) {
-        this.lastAccessed = lastAccessed;
+    @PreUpdate
+    protected void onUpdate() {
+        this.lastAccessed = LocalDateTime.now();
     }
 }

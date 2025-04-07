@@ -4,7 +4,9 @@ import com.digitallearning.model.Resource;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ResourceRepository extends JpaRepository<Resource, Long> {
-    // Additional query methods can be defined here if needed
+    List<Resource> findByCourseId(Long courseId);
 }

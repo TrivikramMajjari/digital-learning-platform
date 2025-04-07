@@ -1,12 +1,13 @@
 package com.digitallearning.controller;
 
 import com.digitallearning.dto.AssignmentDTO;
-import com.digitallearning.model.Assignment;
 import com.digitallearning.service.AssignmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid; // Changed import
 import java.util.List;
 
 @RestController
@@ -16,33 +17,33 @@ public class AssignmentController {
     @Autowired
     private AssignmentService assignmentService;
 
-    @PostMapping
-    public ResponseEntity<Assignment> createAssignment(@RequestBody AssignmentDTO assignmentDTO) {
-        Assignment createdAssignment = assignmentService.createAssignment(assignmentDTO);
-        return ResponseEntity.ok(createdAssignment);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Assignment> getAssignmentById(@PathVariable Long id) {
-        Assignment assignment = assignmentService.getAssignmentById(id);
-        return ResponseEntity.ok(assignment);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Assignment>> getAllAssignments() {
-        List<Assignment> assignments = assignmentService.getAllAssignments();
+    @GetMapping("/course/{courseId}")
+    public ResponseEntity<List<AssignmentDTO>> getAssignmentsByCourseId(@PathVariable Long courseId) {
+        List<AssignmentDTO> assignments = assignmentService.getAssignmentsByCourseId(courseId);
         return ResponseEntity.ok(assignments);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<AssignmentDTO> getAssignmentById(@PathVariable Long id) {
+        AssignmentDTO assignment = assignmentService.getAssignmentById(id);
+        return ResponseEntity.ok(assignment);
+    }
+
+    @PostMapping
+    public ResponseEntity<AssignmentDTO> createAssignment(@Valid @RequestBody AssignmentDTO assignmentDTO) {
+        AssignmentDTO newAssignment = assignmentService.createAssignment(assignmentDTO);
+        return new ResponseEntity<>(newAssignment, HttpStatus.CREATED);
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Assignment> updateAssignment(@PathVariable Long id, @RequestBody AssignmentDTO assignmentDTO) {
-        Assignment updatedAssignment = assignmentService.updateAssignment(id, assignmentDTO);
+    public ResponseEntity<AssignmentDTO> updateAssignment(@PathVariable Long id, @Valid @RequestBody AssignmentDTO assignmentDTO) {
+        AssignmentDTO updatedAssignment = assignmentService.updateAssignment(id, assignmentDTO);
         return ResponseEntity.ok(updatedAssignment);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAssignment(@PathVariable Long id) {
         assignmentService.deleteAssignment(id);
-        return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

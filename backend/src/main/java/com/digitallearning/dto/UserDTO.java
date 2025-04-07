@@ -1,4 +1,4 @@
-package main.java.com.digitallearning.dto;
+package com.digitallearning.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

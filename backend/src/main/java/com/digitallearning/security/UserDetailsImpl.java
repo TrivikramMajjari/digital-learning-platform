@@ -1,4 +1,4 @@
-package main.java.com.digitallearning.security;
+package com.digitallearning.security;
 
 import com.digitallearning.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;

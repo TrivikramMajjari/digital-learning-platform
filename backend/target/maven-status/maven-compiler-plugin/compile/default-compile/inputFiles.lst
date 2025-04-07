@@ -10,7 +10,9 @@ C:\Users\Administrator\Desktop\digital-learning-platform\backend\src\main\java\c
 C:\Users\Administrator\Desktop\digital-learning-platform\backend\src\main\java\com\digitallearning\model\Course.java
 C:\Users\Administrator\Desktop\digital-learning-platform\backend\src\main\java\com\digitallearning\controller\AuthController.java
 C:\Users\Administrator\Desktop\digital-learning-platform\backend\src\main\java\com\digitallearning\model\Notification.java
+C:\Users\Administrator\Desktop\digital-learning-platform\backend\src\main\java\com\digitallearning\security\UserDetailsImpl.java
 C:\Users\Administrator\Desktop\digital-learning-platform\backend\src\main\java\com\digitallearning\dto\AssignmentDTO.java
+C:\Users\Administrator\Desktop\digital-learning-platform\backend\src\main\java\com\digitallearning\repository\NotificationRepository.java
 C:\Users\Administrator\Desktop\digital-learning-platform\backend\src\main\java\com\digitallearning\config\SwaggerConfig.java
 C:\Users\Administrator\Desktop\digital-learning-platform\backend\src\main\java\com\digitallearning\controller\UserController.java
 C:\Users\Administrator\Desktop\digital-learning-platform\backend\src\main\java\com\digitallearning\model\Resource.java
@@ -27,6 +29,7 @@ C:\Users\Administrator\Desktop\digital-learning-platform\backend\src\main\java\c
 C:\Users\Administrator\Desktop\digital-learning-platform\backend\src\main\java\com\digitallearning\model\User.java
 C:\Users\Administrator\Desktop\digital-learning-platform\backend\src\main\java\com\digitallearning\config\WebConfig.java
 C:\Users\Administrator\Desktop\digital-learning-platform\backend\src\main\java\com\digitallearning\exception\GlobalExceptionHandler.java
+C:\Users\Administrator\Desktop\digital-learning-platform\backend\src\main\java\com\digitallearning\dto\UserDTO.java
 C:\Users\Administrator\Desktop\digital-learning-platform\backend\src\main\java\com\digitallearning\controller\CourseController.java
 C:\Users\Administrator\Desktop\digital-learning-platform\backend\src\main\java\com\digitallearning\controller\ResourceController.java
 C:\Users\Administrator\Desktop\digital-learning-platform\backend\src\main\java\com\digitallearning\DigitalLearningApplication.java
