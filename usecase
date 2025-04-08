@@ -1,0 +1,74 @@
+graph TD
+    %% Actors
+    Student((Student))
+    Instructor((Instructor))
+    Admin((Administrator))
+    System((System))
+    
+    %% Main Use Cases - Authentication
+    UC1[Login/Register]
+    UC2[Manage Profile]
+    
+    %% Course Management
+    UC3[Browse Courses]
+    UC4[Enroll in Course]
+    UC5[Create Course]
+    UC6[Update Course]
+    UC7[Delete Course]
+    
+    %% Assignment Management
+    UC8[View Assignments]
+    UC9[Submit Assignment]
+    UC10[Track Assignment Deadlines]
+    UC11[Create Assignment]
+    UC12[Grade Assignment]
+    
+    %% Resource Management
+    UC13[Access Learning Resources]
+    UC14[Upload Resources]
+    
+    %% Progress Tracking
+    UC15[Track Progress]
+    UC16[View Completed Lessons]
+    
+    %% Notification System
+    UC17[Receive Notifications]
+    UC18[Set Notification Preferences]
+    UC19[Send Notifications]
+    
+    %% User Management
+    UC20[Manage Users]
+    
+    %% Relationships - Student
+    Student-->UC1
+    Student-->UC2
+    Student-->UC3
+    Student-->UC4
+    Student-->UC8
+    Student-->UC9
+    Student-->UC10
+    Student-->UC13
+    Student-->UC15
+    Student-->UC16
+    Student-->UC17
+    Student-->UC18
+    
+    %% Relationships - Instructor
+    Instructor-->UC1
+    Instructor-->UC2
+    Instructor-->UC5
+    Instructor-->UC6
+    Instructor-->UC11
+    Instructor-->UC12
+    Instructor-->UC14
+    Instructor-->UC19
+    
+    %% Relationships - Admin
+    Admin-->UC1
+    Admin-->UC6
+    Admin-->UC7
+    Admin-->UC20
+    
+    %% System Automated Tasks
+    System-->UC17
+    System-->UC15
