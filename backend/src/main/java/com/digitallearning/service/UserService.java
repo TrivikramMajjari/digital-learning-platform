@@ -1,5 +1,6 @@
 package com.digitallearning.service;
 
+import com.digitallearning.dto.SignupRequest;
 import com.digitallearning.dto.UserDTO;
 import com.digitallearning.exception.ResourceNotFoundException;
 import com.digitallearning.model.User;
@@ -22,7 +23,7 @@ public class UserService {
 
     public List<UserDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
-        return users.stream().map(user -> convertToDTO(user)).collect(Collectors.toList());
+        return users.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     public UserDTO getUserById(Long id) {
@@ -34,16 +35,15 @@ public class UserService {
     public UserDTO updateUser(Long id, UserDTO userDTO) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
-        
+
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         user.setEmail(userDTO.getEmail());
-        
-        // Only update password if provided
+
         if (userDTO.getRole() != null) {
             user.setRole(userDTO.getRole());
         }
-        
+
         User updatedUser = userRepository.save(user);
         return convertToDTO(updatedUser);
     }
@@ -65,22 +65,22 @@ public class UserService {
         );
     }
 
-    public User convertToEntity(UserDTO userDTO) {
+    public User registerUser(SignupRequest signupRequest) {
+        if (userRepository.existsByUsername(signupRequest.getUsername())) {
+            throw new IllegalArgumentException("Username is already taken!");
+        }
+        if (userRepository.existsByEmail(signupRequest.getEmail())) {
+            throw new IllegalArgumentException("Email is already in use!");
+        }
+
         User user = new User();
-        user.setId(userDTO.getId());
-        user.setUsername(userDTO.getUsername());
-        user.setEmail(userDTO.getEmail());
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setRole(userDTO.getRole());
-        return user;
-    }
-    
-    public UserDTO getUserProgress(Long userId) {
-        // This is a placeholder - you would implement real progress tracking here
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
-        UserDTO userDTO = convertToDTO(user);
-        return userDTO;
+        user.setUsername(signupRequest.getUsername());
+        user.setPassword(passwordEncoder.encode(signupRequest.getPassword())); // Encode the password
+        user.setEmail(signupRequest.getEmail());
+        user.setFirstName(signupRequest.getFirstName());
+        user.setLastName(signupRequest.getLastName());
+        user.setRole("ROLE_USER"); // Default role for new users
+
+        return userRepository.save(user); // Save the user to the database
     }
 }

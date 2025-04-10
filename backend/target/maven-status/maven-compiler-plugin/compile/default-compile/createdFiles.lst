@@ -28,7 +28,6 @@ com\digitallearning\exception\ResourceNotFoundException.class
 com\digitallearning\security\JwtTokenProvider.class
 com\digitallearning\service\ResourceService.class
 com\digitallearning\controller\ResourceController.class
-com\digitallearning\config\SwaggerConfig.class
 com\digitallearning\repository\AssignmentRepository.class
 com\digitallearning\controller\AuthController.class
 com\digitallearning\model\Progress.class
