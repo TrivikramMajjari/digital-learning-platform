@@ -1,22 +1,21 @@
 package com.digitallearning.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collection;
+import java.util.Collections;
 
 @Entity
+@Data
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = "username"),
         @UniqueConstraint(columnNames = "email")
 })
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class User {
+public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,12 +26,42 @@ public class User {
 
     private String password;
 
-    private String firstName;
+    private String role; // e.g., ROLE_USER or ROLE_ADMIN
 
-    private String lastName;
+    // Removed duplicate getAuthorities() method
 
-    private String role;
+    @Override
+    public String getPassword() {
+        return password;
+    }
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<Progress> progress = new HashSet<>();
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(() -> role); // Return the user's role as a GrantedAuthority
+}
 }
